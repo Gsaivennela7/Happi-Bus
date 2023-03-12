@@ -1,21 +1,16 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import {  NavigationContainer } from '@react-navigation/native';
+import AuthNavigator from './app/navigations/AuthNavigator';
+import AppNavigator from './app/navigations/AppNavigator';
+import AuthContext from './app/auth/context';
 
 export default function App() {
+  const [user, setUser] = useState()
   return (
-    <View style={styles.container}>
-      <Text>CMPE-272</Text>
-      <StatusBar style="auto" />
-    </View>
+    <AuthContext.Provider value={{ user, setUser }}>
+      <NavigationContainer>
+        {user ? <AuthNavigator /> : <AppNavigator />}
+      </NavigationContainer>
+    </AuthContext.Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

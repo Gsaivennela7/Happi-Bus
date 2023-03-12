@@ -1,0 +1,15 @@
+import React from 'react';
+import {createStackNavigator} from '@react-navigation/stack'
+import LoginScreen from '../screens/LoginScreen';
+import SignUpScreen from '../screens/SignUpScreen';
+
+const Stack = createStackNavigator();
+
+const AuthNavigator = ({navigation}) => (
+    <Stack.Navigator >
+        <Stack.Screen name="LoginScreen"   options={{headerTitleStyle: { alignSelf: 'center' }, title:  '' ,  headerStyle: {backgroundColor: '#E7ECF4'}, headerShown: true}} component={LoginScreen} /> 
+        <Stack.Screen name="SignUpScreen"  options={{headerTitleStyle: { alignSelf: 'center' }, title:  '' ,  headerStyle: {backgroundColor: '#E7ECF4'}, headerShown: true}} component={SignUpScreen} /> 
+    </Stack.Navigator>
+)
+
+export default AuthNavigator;
