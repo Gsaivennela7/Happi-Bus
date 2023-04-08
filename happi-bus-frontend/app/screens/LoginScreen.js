@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-import React from 'react';
-import { View, Text } from 'react-native';
-import Screen from '../components/Screen';
-
-export default function LoginScreen() {
-  return (
-    <Screen>
-      <Text>LoginScreen</Text>
-     </Screen>
-  );
-}
-=======
 import React, { Component, useEffect, useContext, useState } from 'react';
 import { StyleSheet, Text, View, Button, Alert, AsyncStorageStatic } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
@@ -205,4 +192,3 @@ const styles = StyleSheet.create({
 });
 
 export default LoginScreen;
->>>>>>> cac1951 (ui bus ticket, ticket, login screens)

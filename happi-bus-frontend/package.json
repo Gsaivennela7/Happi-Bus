@@ -12,20 +12,12 @@
     "@react-navigation/bottom-tabs": "^6.5.7",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/stack": "^6.3.16",
-<<<<<<< HEAD
-=======
     "apisauce": "^3.0.0",
->>>>>>> cac1951 (ui bus ticket, ticket, login screens)
     "expo": "~48.0.4",
     "expo-splash-screen": "~0.18.1",
     "expo-status-bar": "~1.4.4",
     "formik": "^2.2.9",
     "react": "18.2.0",
-<<<<<<< HEAD
-    "react-dom": "^18.2.0",
-    "react-native": "0.71.3",
-    "react-native-web": "~0.18.11"
-=======
     "react-native": "0.71.3",
     "react-native-gesture-handler": "^2.9.0",
     "react-native-qrcode-svg": "^6.2.0",
@@ -33,7 +25,6 @@
     "react-native-screens": "^3.20.0",
     "react-native-svg": "^13.9.0",
     "yup": "^1.0.2"
->>>>>>> cac1951 (ui bus ticket, ticket, login screens)
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

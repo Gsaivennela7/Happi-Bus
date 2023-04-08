@@ -1,25 +1,13 @@
 import React from 'react';
-<<<<<<< HEAD
-import { View, Text } from 'react-native';
-import Screen from '../components/Screen';
-import HeaderCurve from '../components/HeaderCurve';
-=======
 import { View, Text, StyleSheet } from 'react-native';
 import Screen from '../components/Screen';
 import HeaderCurve from '../components/HeaderCurve';
 import TicketOnSale from '../components/TicketOnSale';
 import { ScrollView } from 'react-native-gesture-handler';
->>>>>>> cac1951 (ui bus ticket, ticket, login screens)
 
 export default function BuyTicketScreen() {
   return (
     <Screen>
-<<<<<<< HEAD
-      <Text>BuyTicketScreen</Text>
-    </Screen>
-  );
-}
-=======
       <ScrollView >
         <View style={styles.headerContainer}>
           <Text style={styles.textStyle}>Buy Tickets</Text>
@@ -56,4 +44,3 @@ const styles = StyleSheet.create({
     paddingLeft: 10
   },
 })
->>>>>>> cac1951 (ui bus ticket, ticket, login screens)

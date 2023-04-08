@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-import React from 'react';
-import { View, Text } from 'react-native';
-import Screen from '../components/Screen';
-
-export default function SettingScreen() {
-  return (
-    <Screen>
-      <Text>SettingScreen</Text>
-     </Screen>
-=======
 import React, {useContext, useState, useEffect} from 'react';
 import { View, Text, Button, TouchableOpacity } from 'react-native';
 import Screen from '../components/Screen';
@@ -33,6 +22,5 @@ export default function SettingScreen() {
         </View>
 
     </Screen>
->>>>>>> cac1951 (ui bus ticket, ticket, login screens)
   );
 }
