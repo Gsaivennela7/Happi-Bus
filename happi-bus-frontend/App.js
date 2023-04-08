@@ -9,7 +9,11 @@ export default function App() {
   return (
     <AuthContext.Provider value={{ user, setUser }}>
       <NavigationContainer>
+<<<<<<< HEAD
         {user ? <AuthNavigator /> : <AppNavigator />}
+=======
+        {user ? <AppNavigator /> : <AuthNavigator />}
+>>>>>>> cac1951 (ui bus ticket, ticket, login screens)
       </NavigationContainer>
     </AuthContext.Provider>
   );
