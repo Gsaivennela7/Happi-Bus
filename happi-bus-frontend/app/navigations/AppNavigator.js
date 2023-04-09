@@ -13,23 +13,24 @@ const tabBarListeners = ({ navigation, route }) => ({
 });
 const AppNavigator = () => (
     <Tab.Navigator  
-        screenOptions={
-            { headerStyle:{
-                    backgroundColor: "#85AAE6",
-                    
-                }, 
-                headerShown: true}
-            } 
-        tabBarOptions={{
-            activeBackgroundColor:'#85AAE6',
-            activeTintColor: 'white',
-            inactiveBackgroundColor: 'white',
-            inactiveTintColor:'gray',
-            style: { height: 100}
-            }
+    screenOptions={
+        { headerStyle:{
+                backgroundColor: "#85AAE6",
+            }, 
+            headerShown: true,
+            activeBackgroundColor: "#85AAE6",
+            activeTintColor: "#FFFFFF",
+            inactiveBackgroundColor: "#FFFFFF",
+            inactiveTintColor: "#DBDBDB",
+            style: {
+                height: 100
+            },
+            headerTitleStyle:{ color: '#FFF'},
+       
         }
+    } 
     >
-        <Tab.Screen name="Feed" component= {FeedNavigator}   listeners={tabBarListeners}
+        <Tab.Screen name="Home" component= {FeedNavigator}   listeners={tabBarListeners}
             options={{ tabBarLabel: '',  tabBarIcon: ({color}) => <Image  style={{ width: 25, height: 25, alignSelf: 'center',top: '20%', tintColor: color, }} source={require('../assets/images/store.png')}/> }}/>
         <Tab.Screen name="CartScreen" component= {CartScreen} 
             options={{ tabBarLabel: '', tabBarIcon: ({color}) => <Image style={{ width: 25, height: 25, alignSelf: 'center', top: '20%', tintColor: color,}} source={require('../assets/images/cart.png')}/> }}/>
