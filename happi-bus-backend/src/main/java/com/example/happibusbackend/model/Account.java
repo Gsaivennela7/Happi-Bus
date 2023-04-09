@@ -2,6 +2,7 @@ package com.example.happibusbackend.model;
 
 import lombok.Data;
 import org.bson.types.Binary;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Component;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 public class Account {
 
     @Id
+    private ObjectId objectId;
     private int userId;
 
     private String password;

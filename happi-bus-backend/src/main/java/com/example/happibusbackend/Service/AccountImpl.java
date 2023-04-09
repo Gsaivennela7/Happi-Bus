@@ -10,8 +10,15 @@ import org.springframework.stereotype.Service;
 public class AccountImpl {
 
 
+
+    public AccountImpl(){
+
+    }
+
     @Autowired
     AccountRepository accountRepository;
+
+
 
 
     public void createAccount(Account acc){
