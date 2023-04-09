@@ -2,16 +2,19 @@ package com.example.happibusbackend.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.bson.types.ObjectId;
+import lombok.Data;
 
 import java.util.List;
 @Document("Bus")
+@Data
 public class Bus {
 
     @Id
+    private ObjectId id;
     private int busNumber;
     private int capacity;
     private String driverName;
-
     private String dest;
     private String src;
     private List<Passenger> passengers;

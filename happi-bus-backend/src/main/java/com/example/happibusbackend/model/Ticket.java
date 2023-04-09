@@ -3,23 +3,22 @@ package com.example.happibusbackend.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Component;
+import org.bson.types.ObjectId;
+import lombok.Data;
 
 @Document("Ticket")
-@Component
+@Data
 public class Ticket {
 
     @Id
+    private ObjectId id;
     private int ticketId;
-
     private int busNumber;
-
     private int seatNumber;
-
-    private  String status;
-
+    private String status;
     private int price;
 
-    public Ticket(){
+    public Ticket() {
 
     }
 
