@@ -5,7 +5,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Component;
 
 @Document("Ticket")
-@Component
 public class Ticket {
 
     @Id

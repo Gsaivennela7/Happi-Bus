@@ -2,6 +2,7 @@ package com.example.happibusbackend.controller;
 
 import com.example.happibusbackend.Service.AccountImpl;
 import com.example.happibusbackend.model.Account;
+import com.example.happibusbackend.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,11 +19,11 @@ import org.springframework.web.multipart.MultipartFile;
 public class AccountController {
 
     @Autowired
-    AccountImpl accImpl;
+    AccountRepository accImpl;
 
     @PostMapping("/addAccount")
     public void addAccount(@RequestBody Account acc){
-        accImpl.createAccount(acc);
+        accImpl.save(acc);
     }
 
 //    @PostMapping(value = "/image", produces = {MediaType.IMAGE_PNG_VALUE, "application.json"})
