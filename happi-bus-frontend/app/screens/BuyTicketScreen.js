@@ -6,6 +6,10 @@ import TicketOnSale from '../components/TicketOnSale';
 import { ScrollView } from 'react-native-gesture-handler';
 
 export default function BuyTicketScreen() {
+
+  const addToCart = () => {
+
+  }
   return (
     <Screen>
       <ScrollView >
@@ -19,8 +23,6 @@ export default function BuyTicketScreen() {
         <TicketOnSale destination={"Temecula"} arrivalTime={"4/7/23 6:30pm"} departure={"San Jose"} departurTime={"4/7/23 12:30pm"} busNumber={"1AE"} status={"Full"} price={"60"} />
         <TicketOnSale destination={"Los Angeles"} arrivalTime={"4/7/23 6:30pm"} departure={"San Jose"} departurTime={"4/7/23 12:30pm"} busNumber={"1AD"} status={"Buy"} price={"60"} />
         <TicketOnSale destination={"Temecula"} arrivalTime={"4/7/23 6:30pm"} departure={"San Jose"} departurTime={"4/7/23 12:30pm"} busNumber={"1AE"} status={"Full"} price={"60"} />
-     
-     
      
      
       </ScrollView>
