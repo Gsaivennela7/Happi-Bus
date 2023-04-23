@@ -1,6 +1,6 @@
 package com.example.happibusbackend.controller;
 
-import com.example.happibusbackend.Service.AccountImpl;
+import com.example.happibusbackend.Service.AccountService;
 import com.example.happibusbackend.model.Account;
 import com.example.happibusbackend.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,26 +11,35 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
 /**
  *
  */
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/account")
 public class AccountController {
 
+
     @Autowired
-    AccountRepository accImpl;
+    AccountService accImpl;
 
     @PostMapping("/addAccount")
     public void addAccount(@RequestBody Account acc){
-        accImpl.save(acc);
+        accImpl.createAccount(acc);
+
     }
 
-//    @PostMapping(value = "/image", produces = {MediaType.IMAGE_PNG_VALUE, "application.json"})
-//    public ResponseEntity<?> uploadImage(@RequestParam("imageFile") MultipartFile file,
-//                                         @RequestParam("imageName") String name){
+//   @PostMapping(value = "/image", produces = {MediaType.IMAGE_PNG_VALUE, "application.json"})
+//  public ResponseEntity<?> upload(@RequestParam("imageFile") MultipartFile file){
 //
-//        return new ResponseEntity<>(name, HttpStatus.CREATED);
-//    }
+//       return new ResponseEntity<>(accImpl.uploadImage(file), HttpStatus.CREATED);
+////    }
+
+    @PostMapping("/upload")
+    public ResponseEntity<?> upload(@RequestParam("file")MultipartFile file) throws IOException, IOException {
+        return new ResponseEntity<>(accImpl.uploadImage(file), HttpStatus.OK);
+    }
 
 }

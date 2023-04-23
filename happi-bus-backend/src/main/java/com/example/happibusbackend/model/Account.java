@@ -14,7 +14,6 @@ public class Account {
     @Id
     private ObjectId objectId;
     private int userId;
-
     private String password;
     private String firstName;
     private String lastName;
