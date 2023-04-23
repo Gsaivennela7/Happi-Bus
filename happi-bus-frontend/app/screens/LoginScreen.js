@@ -48,6 +48,24 @@ function LoginScreen({ navigation }) {
             }
         }
     });
+    const signUpValidationSchema = yup.object().shape({
+        first_name: yup
+            .string()
+            .min(3, ({ min }) => `First name must be at least ${min} characters`)
+            .required('First name is required'),
+        last_name: yup
+            .string()
+            .min(3, ({ min }) => `Last name must be at least ${min} characters`)
+            .required('Last name is required'),
+        email: yup
+            .string()
+            .email("Please enter valid email")
+            .required('Email Address is Required'),
+        password1: yup
+            .string()
+            .min(5, ({ min }) => `Password must be at least ${min} characters`)
+            .required('Password is required'),
+    })
     return (
         <Screen>
             <View style={{ height: '100%', backgroundColor: '#E7ECF4' }}>
