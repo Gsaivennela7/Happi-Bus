@@ -10,9 +10,14 @@ import lombok.Data;
 @Data
 public class Ticket {
 
+
+
     @Id
     private ObjectId id;
     private int ticketId;
+    private String destination; //Added on 4/22
+    private String arrival_time_eta; //Added on 4/22
+    private String departure_time; //Added on 4/22
     private int busNumber;
     private int seatNumber;
     private String status;
