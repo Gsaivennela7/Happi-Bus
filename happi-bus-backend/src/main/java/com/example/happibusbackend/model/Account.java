@@ -18,13 +18,13 @@ public class Account {
     private String firstName;
     private String lastName;
 
-    private Binary photo;
+    private Photo photo;
 
-    public Binary getPhoto() {
+    public Photo getPhoto() {
         return photo;
     }
 
-    public void setPhoto(Binary photo) {
+    public void setPhoto(Photo photo) {
         this.photo = photo;
     }
 
