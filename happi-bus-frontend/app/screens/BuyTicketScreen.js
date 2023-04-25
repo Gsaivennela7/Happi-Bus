@@ -19,7 +19,7 @@ export default function BuyTicketScreen() {
         setTickets(response.data);
       }
     });
-  }, []);
+  }, [tickets]);
 
   return (
     <Screen>
@@ -40,11 +40,11 @@ export default function BuyTicketScreen() {
 }
 const styles = StyleSheet.create({
   textStyle: {
-    fontSize: 45,
+    fontSize: 24,
     fontWeight: 'bold'
   },
   textDescription: {
-    fontSize: 28,
+    fontSize: 18,
     color: "#A7A7A7"
   },
   headerContainer: {

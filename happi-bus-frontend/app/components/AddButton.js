@@ -9,19 +9,19 @@ function AddButton({onPress}) {
 }
 const styles = StyleSheet.create({
     addContainer:{
-        height: 45,
-        width: 105,
+        height: 20,
+        width: 60,
         borderRadius: 100,
         backgroundColor: 'white',
         position: 'absolute',
-        right: 40,
+        right: 15,
+        bottom: 10,
         justifyContent: 'center',
         alignItems: 'center',
-
         backgroundColor: '#3AC49A'
     },
     text: {
-        fontSize: 26,
+        fontSize: 18,
         fontWeight: 'bold',
         color: '#FFFFFF'
     }

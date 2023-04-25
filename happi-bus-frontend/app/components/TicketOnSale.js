@@ -10,8 +10,8 @@ export default function TicketOnSale({ destination, arrivalTime, departure, depa
                     <Text style={styles.titleDefault}>{departure} to {destination}</Text>
                 </View>
                 <View style={styles.ticketInfoContainer}>
-                    <View style= {{margin: 30}}>
-                        <Image  style={{ width: 45, height: 45, tintColor: "#3AC49A", }} source={require('../assets/images/ticket.png')}/>
+                    <View style= {{margin: 15}}>
+                        <Image  style={{ width: 30, height: 30, tintColor: "#3AC49A", }} source={require('../assets/images/ticket.png')}/>
                     </View>
                     <View style= {{alignSelf: 'center'}}>
                         <View style={{flexDirection: 'row'}}>
@@ -39,17 +39,17 @@ export default function TicketOnSale({ destination, arrivalTime, departure, depa
 const styles = StyleSheet.create({
     
     titleDefault: {
-        fontSize: 24,
+        fontSize: 18,
         color: '#000000',
         fontWeight: 'bold'
     },
     labelFont: {
-        fontSize: 22,
+        fontSize: 18,
         color: '#000000',
         fontWeight: 'bold'
     },
     valueFont: {
-        fontSize: 22,
+        fontSize: 16,
         color: '#000000',
     },
     titleContainer: {

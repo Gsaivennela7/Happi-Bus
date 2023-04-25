@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +18,7 @@ import com.example.happibusbackend.repository.PassengerRepository;
 import com.example.happibusbackend.repository.TicketRepository;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:19006"})
+@CrossOrigin(origins = { "http://localhost:19006" })
 @RequestMapping("/bus")
 public class BusController {
     @Autowired
@@ -25,15 +26,18 @@ public class BusController {
 
     @Autowired
     private TicketRepository ticketRepository;
-    
+
     @Autowired
     private PassengerRepository passengerRepository;
 
     @GetMapping(value = "/addTicketsOnSale/")
     public String addTicketsOnSale() {
-        ticketRepository.save(new Ticket("Temecula", "2023-04-29 1:30pm", "San Jose", "2023-04-29 7:30pm", "10D", "On Sale", 70));
-        ticketRepository.save(new Ticket("San Diego", "2023-04-29 1:30pm", "San Jose",  "2023-04-29 7:30pm", "10D", "On Sale", 70));
-        ticketRepository.save(new Ticket("Los Angeles", "2023-04-29 1:30pm", "San Jose", "2023-04-29 7:30pm", "10D", "On Sale", 70));
+        ticketRepository.save(
+                new Ticket("Temecula", "2023-04-29 1:30pm", "San Jose", "2023-04-29 7:30pm", "10D", "On Sale", 70));
+        ticketRepository.save(
+                new Ticket("San Diego", "2023-04-29 1:30pm", "San Jose", "2023-04-29 7:30pm", "10D", "On Sale", 70));
+        ticketRepository.save(
+                new Ticket("Los Angeles", "2023-04-29 1:30pm", "San Jose", "2023-04-29 7:30pm", "10D", "On Sale", 70));
         return "Tickets successfully added";
     }
 
@@ -42,10 +46,17 @@ public class BusController {
         List<Passenger> passengers = passengerRepository.findAll();
         List<Passenger> busPassengers = new ArrayList<>();
         for (Passenger passenger : passengers) {
-            if (String.valueOf(passenger.getTicket().getBusNumber()).equals(busNnumber)){
+            if (String.valueOf(passenger.getTicket().getBusNumber()).equals(busNnumber)) {
                 busPassengers.add(passenger);
             }
-        };
+        }
+        ;
         return busPassengers;
+    }
+
+    @GetMapping("/deleteAllTickets/")
+    public String deleteAll() {
+        ticketRepository.deleteAll();
+        return "Tickets successfully deleted";
     }
 }
