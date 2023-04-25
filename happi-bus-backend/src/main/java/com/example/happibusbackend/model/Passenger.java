@@ -2,6 +2,9 @@ package com.example.happibusbackend.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.concurrent.atomic.AtomicInteger;
+
 import org.bson.types.ObjectId;
 import lombok.Data;
 
@@ -12,13 +15,17 @@ public class Passenger {
     @Id
     private ObjectId id;
     private int passengerId;
+    private int accountId;
     private String fName;
     private String lName;
     private Ticket ticket;
-
-
-    public Passenger(){
-
+    
+    public Passenger(int passengerId, int accountId, String fname, String lname, Ticket ticket){
+        this.passengerId = passengerId;
+        this.accountId = accountId;
+        this.fName = fname;
+        this.lName = lname;
+        this.ticket = ticket;
     }
     public int getId() {
         return passengerId;
