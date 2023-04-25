@@ -3,69 +3,43 @@ import { StyleSheet, Text, View, Button, Alert, AsyncStorageStatic } from 'react
 import { TextInput } from 'react-native-gesture-handler';
 import Screen from '../components/Screen';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { create } from 'apisauce';
+import api from "../api/axiosSettings";
 import AuthContext from '../auth/context';
 import * as yup from 'yup'
 
 function LoginScreen({ navigation }) {
     const authContext = useContext(AuthContext);
     const [user, setUser] = useState();
-    const setUserLogin = () => {
-        setUser("User");
-    };
-  
+
     const handleSubmit = async (values) => {
-        let apiStr = endpoints.login
-        api.baseURL.post(apiStr, { email: values.email, password: values.password }).then(response => {
+        api.post("/account/login/", { email: values.email, password: values.password }).then(response => {
+            console.log(values.email);
             if (response.data != null) {
                 console.log("Data: " + response.data);
                 setUser(response.data);
             }
-            else {
-                Alert.alert(
-                    "Login Failed",
-                    "Invalid email or password",
-                    [
-                        {
-                            text: "Cancel",
-                            onPress: () => console.log("Cancel Pressed"),
-                            style: "cancel"
-                        },
-                        { text: "OK", onPress: () => console.log("OK Pressed") }
-                    ]
-                );
-            }
-
-        });
+            
+        })
     }
 
     useEffect(() => {
         console.log("==========Context====================");
-        if (authContext != null) {
-            if (user){
-                authContext.setUser("User");
-                console.log(authContext.user);
-            }
+
+        if (user) {
+            authContext.setUser(user);
+            console.log(authContext.user);
         }
     });
-    const signUpValidationSchema = yup.object().shape({
-        first_name: yup
-            .string()
-            .min(3, ({ min }) => `First name must be at least ${min} characters`)
-            .required('First name is required'),
-        last_name: yup
-            .string()
-            .min(3, ({ min }) => `Last name must be at least ${min} characters`)
-            .required('Last name is required'),
+    const loginValidationSchema = yup.object().shape({
         email: yup
             .string()
             .email("Please enter valid email")
             .required('Email Address is Required'),
-        password1: yup
+        password: yup
             .string()
             .min(5, ({ min }) => `Password must be at least ${min} characters`)
             .required('Password is required'),
-    })
+    });
     return (
         <Screen>
             <View style={{ height: '100%', backgroundColor: '#E7ECF4' }}>
@@ -85,11 +59,11 @@ function LoginScreen({ navigation }) {
                                 {/* For email */}
                                 <TextInput
                                     style={styles.textInput}
-                                    placeholder='Email'
+                                    placeholder="email"
                                     onChangeText={handleChange('email')}
                                     onBlur={handleBlur('email')}
+                                    autoCapitalize="none"
                                     value={values.email}
-                                    keyboardType="email-address"
                                 />
                                 {(errors.email && touched.email) && <Text style={{ fontSize: 10, color: 'red' }}>{errors.email}</Text>}
                                 {/* For password */}
@@ -98,14 +72,14 @@ function LoginScreen({ navigation }) {
                                     placeholder='Password'
                                     onChangeText={handleChange('password')}
                                     onBlur={handleBlur('password')}
+                                    autoCapitalize="none"
                                     value={values.password}
                                     secureTextEntry
                                 />
                                 {(errors.password && touched.password) && <Text style={{ fontSize: 10, color: 'red' }}>{errors.password}</Text>}
 
-
                                 <View style={styles.buttonContainer1}>
-                                    <Button onPress={setUserLogin} title="Sign in" color='#775E5E' disabled={!isValid} />
+                                    <Button onPress={handleSubmit} title="Sign in" color='#775E5E' disabled={!isValid} />
                                 </View>
                                 <Button title="Don't have account yet?" onPress={() => navigation.navigate('SignUpScreen')} color='#85AAE6' />
 
@@ -136,7 +110,7 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 50,
         borderColor: '#A7A7A7',
         borderWidth: 1,
-     
+
     },
     buttonContainer2: {
         margin: 20,
@@ -192,7 +166,7 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 10,
         borderColor: '#A7A7A7',
         borderWidth: 0.5
-      
+
     },
     loginBlock: {
         margin: 5,
@@ -204,8 +178,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
         borderColor: '#DBDBDB',
         borderWidth: 1,
-   
-    
+
+
     },
 });
 
