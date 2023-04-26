@@ -26,8 +26,18 @@ public class AccountController {
     AccountService accImpl;
 
     @PostMapping("/addAccount")
-    public void addAccount(@RequestBody Account acc){
-        accImpl.createAccount(acc);
+    public ResponseEntity<?> addAccount(@RequestParam("file")MultipartFile file, @RequestParam String firstName, @RequestParam String email,
+                                        @RequestParam String lastName,@RequestParam String password,@RequestParam int userId
+                                        ) throws IOException, IOException{
+
+        Account acc = new Account();
+        acc.setPassword(password);
+        acc.setFirstName(firstName);
+        acc.setLastName(lastName);
+        acc.setUserId(userId);
+        acc.setEmail(email);
+        return new ResponseEntity<>(accImpl.createAccount(acc,file), HttpStatus.OK);
+
 
     }
 
@@ -37,9 +47,9 @@ public class AccountController {
 //       return new ResponseEntity<>(accImpl.uploadImage(file), HttpStatus.CREATED);
 ////    }
 
-    @PostMapping("/upload")
-    public ResponseEntity<?> upload(@RequestParam("file")MultipartFile file) throws IOException, IOException {
-        return new ResponseEntity<>(accImpl.uploadImage(file), HttpStatus.OK);
-    }
+//    @PostMapping("/upload")
+//    public ResponseEntity<?> upload(@RequestParam("file")MultipartFile file) throws IOException, IOException {
+//        return new ResponseEntity<>(accImpl.uploadImage(file), HttpStatus.OK);
+//    }
 
 }

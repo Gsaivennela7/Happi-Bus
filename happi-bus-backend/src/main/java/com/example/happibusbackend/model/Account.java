@@ -18,6 +18,9 @@ public class Account {
     private String firstName;
     private String lastName;
 
+    private String email;
+
+
     private Photo photo;
 
     public Photo getPhoto() {
@@ -38,7 +41,13 @@ public class Account {
         this.lastName = lastName;
     }
 
+    public String getEmail() {
+        return this.email;
+    }
 
+    public void setEmail(String password) {
+        this.email = email;
+    }
     public int getUserId() {
         return this.userId;
     }

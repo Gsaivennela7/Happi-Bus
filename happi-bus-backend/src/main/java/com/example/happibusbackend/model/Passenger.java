@@ -17,6 +17,7 @@ public class Passenger {
     private Ticket ticket;
 
 
+
     public Passenger(){
 
     }
