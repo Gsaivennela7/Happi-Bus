@@ -49,7 +49,7 @@ public class AccountService {
 
         DBObject metadata = new BasicDBObject();
         metadata.put("photoSize", upload.getSize());
-        metadata.put("accountId", acc.getUserId());
+        metadata.put("accountId", acc.getAcountId());
         Object fileId = gridtemplate.store(upload.getInputStream(),upload.getOriginalFilename(),upload.getContentType(),metadata);
                 return fileId.toString();
 
@@ -63,6 +63,7 @@ public class AccountService {
 
         if (gridFSFile != null && gridFSFile.getMetadata() != null) {
             loadFile.setPhotoName( gridFSFile.getFilename() );
+
 
             loadFile.setPhotoType( gridFSFile.getMetadata().get("_contentType").toString() );
 

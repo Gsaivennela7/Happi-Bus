@@ -1,15 +1,26 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Screen from '../components/Screen';
 import HeaderCurve from '../components/HeaderCurve';
 import TicketOnSale from '../components/TicketOnSale';
 import { ScrollView } from 'react-native-gesture-handler';
+import api from "../api/axiosSettings";
+import AuthContext from '../auth/context';
 
 export default function BuyTicketScreen() {
 
-  const addToCart = () => {
 
-  }
+  const authContext = useContext(AuthContext);
+  const [tickets, setTickets] = useState([]);
+  console.log(authContext.user)
+  useEffect(() => {
+    api.get('/ticket/getTicketsOnSale/').then((response) => {
+      if (response != null || response.data > 0 || response != undefined) {
+        setTickets(response.data);
+      }
+    });
+  }, [tickets]);
+
   return (
     <Screen>
       <ScrollView >
@@ -17,14 +28,11 @@ export default function BuyTicketScreen() {
           <Text style={styles.textStyle}>Buy Tickets</Text>
           <Text style={styles.textDescription}> Available bus destinations and departures</Text>
         </View>
-        <TicketOnSale destination={"Los Angeles"} arrivalTime={"4/7/23 6:30pm"} departure={"San Jose"} departurTime={"4/7/23 12:30pm"} busNumber={"1AD"} status={"Buy"} price={"60"} />
-        <TicketOnSale destination={"Temecula"} arrivalTime={"4/7/23 6:30pm"} departure={"San Jose"} departurTime={"4/7/23 12:30pm"} busNumber={"1AE"} status={"Full"} price={"60"} />
-        <TicketOnSale destination={"Los Angeles"} arrivalTime={"4/7/23 6:30pm"} departure={"San Jose"} departurTime={"4/7/23 12:30pm"} busNumber={"1AD"} status={"Buy"} price={"60"} />
-        <TicketOnSale destination={"Temecula"} arrivalTime={"4/7/23 6:30pm"} departure={"San Jose"} departurTime={"4/7/23 12:30pm"} busNumber={"1AE"} status={"Full"} price={"60"} />
-        <TicketOnSale destination={"Los Angeles"} arrivalTime={"4/7/23 6:30pm"} departure={"San Jose"} departurTime={"4/7/23 12:30pm"} busNumber={"1AD"} status={"Buy"} price={"60"} />
-        <TicketOnSale destination={"Temecula"} arrivalTime={"4/7/23 6:30pm"} departure={"San Jose"} departurTime={"4/7/23 12:30pm"} busNumber={"1AE"} status={"Full"} price={"60"} />
-     
-     
+        {tickets.map((ticket, index) => {
+            return (
+              <TicketOnSale key={index} destination={ticket.destination} arrivalTime={ticket.arrival_time_eta} departure={ticket.departure} departurTime={ticket.departure_time} busNumber={ticket.busNumber} status={ticket.status} price={ticket.price} />
+            );
+          })}
       </ScrollView>
     </Screen>
   );
@@ -32,11 +40,11 @@ export default function BuyTicketScreen() {
 }
 const styles = StyleSheet.create({
   textStyle: {
-    fontSize: 45,
+    fontSize: 24,
     fontWeight: 'bold'
   },
   textDescription: {
-    fontSize: 28,
+    fontSize: 18,
     color: "#A7A7A7"
   },
   headerContainer: {
@@ -46,3 +54,9 @@ const styles = StyleSheet.create({
     paddingLeft: 10
   },
 })
+/** {(tickets != undefined) ?
+          tickets.map((ticket) => {
+            return (
+              <TicketOnSale destination={ticket.destination} arrivalTime={ticket.arrival_time_eta} departure={ticket.departure} departurTime={ticket.departure_time} busNumber={ticket.busNumber} status={ticket.status} price={ticket.price} />
+            );
+          }) : <Text></Text>} */

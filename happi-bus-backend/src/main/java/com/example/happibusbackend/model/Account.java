@@ -13,12 +13,14 @@ public class Account {
 
     @Id
     private ObjectId objectId;
-    private int userId;
+    private int acountId;
     private String password;
+    private String email;
+    private String sessionId;
     private String firstName;
     private String lastName;
 
-    private String email;
+
 
 
     private Photo photo;
@@ -34,8 +36,16 @@ public class Account {
     public Account(){
 
     }
-    public Account(int userId, String password, String firstName, String lastName) {
-        this.userId = userId;
+    //Use to Create New Account 
+    public Account(int acountId, String email, String password, String firstName, String lastName) {
+        this.acountId = acountId;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+    //Use to Link Account to Passenger
+    public Account(int acountId, String password, String firstName, String lastName) {
+        this.acountId = acountId;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -45,15 +55,13 @@ public class Account {
         return this.email;
     }
 
-    public void setEmail(String password) {
-        this.email = email;
-    }
-    public int getUserId() {
-        return this.userId;
+
+    public int getAcountId() {
+        return this.acountId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setAccountId(int acountId) {
+        this.acountId = acountId;
     }
 
     public String getPassword() {
@@ -85,7 +93,7 @@ public class Account {
     @Override
     public String toString() {
         return "{" +
-                " userId='" + getUserId() + "'" +
+                " userId='" + getAcountId() + "'" +
                 ", password='" + getPassword() + "'" +
                 ", firstName='" + getFirstName() + "'" +
                 ", lastName='" + getLastName() + "'" +

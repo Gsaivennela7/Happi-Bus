@@ -2,7 +2,10 @@ package com.example.happibusbackend.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.stereotype.Component;
+
+import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import org.bson.types.ObjectId;
 import lombok.Data;
 
@@ -13,19 +16,39 @@ public class Ticket {
     @Id
     private ObjectId id;
     private int ticketId;
-    private int busNumber;
-    private int seatNumber;
+    private int passengerId;
+    private String destination; // Added on 4/22
+    private String arrival_time_eta; // Added on 4/22
+    private String departure;
+    private String departure_time; // Added on 4/22
+    private String busNumber;
     private String status;
     private int price;
+
 
     public Ticket() {
 
     }
-
-    public Ticket(int ticketId, int busNumber, int seatNumber, String status, int price) {
-        this.ticketId = ticketId;
+    //Tickets on Sale
+    public Ticket(String destination, String arrival_time_eta,
+            String departure, String departure_time, String busNumber, String status, int price) {
+        this.destination = destination;
+        this.arrival_time_eta = arrival_time_eta;
+        this.departure_time = departure_time;
+        this.departure = departure;
         this.busNumber = busNumber;
-        this.seatNumber = seatNumber;
+        this.status = status;
+        this.price = price;
+    }
+
+    //Tickets Bought by a Passenger
+    public Ticket(int ticketId, String destination, String arrival_time_eta,
+            String departure_time, String busNumber, String status, int price) {
+        this.ticketId = ticketId;
+        this.destination = destination;
+        this.arrival_time_eta = arrival_time_eta;
+        this.departure_time = departure_time;
+        this.busNumber = busNumber;
         this.status = status;
         this.price = price;
     }
@@ -38,20 +61,12 @@ public class Ticket {
         this.ticketId = ticketId;
     }
 
-    public int getBusNumber() {
+    public String getBusNumber() {
         return busNumber;
     }
 
-    public void setBusNumber(int busNumber) {
+    public void setBusNumber(String busNumber) {
         this.busNumber = busNumber;
-    }
-
-    public int getSeatNumber() {
-        return seatNumber;
-    }
-
-    public void setSeatNumber(int seatNumber) {
-        this.seatNumber = seatNumber;
     }
 
     public String getStatus() {
@@ -68,5 +83,13 @@ public class Ticket {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public int getPassengerId() {
+        return this.passengerId;
+    }
+
+    public void setPassengerId(int passengerId) {
+        this.passengerId = passengerId;
     }
 }

@@ -77,19 +77,19 @@ const styles = StyleSheet.create({
 
     },
     text: {
-        fontSize: 28,
+        fontSize: 24,
         fontWeight: 'bold',
         color: '#000000',
     },
     labelFont: {
-        fontSize: 26,
+        fontSize: 18,
         fontWeight: 'bold',
         color: '#000000',
         alignSelf: 'center',
         paddingLeft: 10,
     },
     valueFont: {
-        fontSize: 26,
+        fontSize: 18,
         color: '#000000',
         alignSelf: 'center'
     },

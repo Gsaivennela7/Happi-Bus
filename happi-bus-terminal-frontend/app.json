@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "happi-bus-terminal-frontend",
+    "slug": "happi-bus-terminal-frontend",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
