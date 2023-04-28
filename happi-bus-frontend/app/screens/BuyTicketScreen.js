@@ -8,11 +8,10 @@ import api from "../api/axiosSettings";
 import AuthContext from '../auth/context';
 
 export default function BuyTicketScreen() {
-
-
   const authContext = useContext(AuthContext);
   const [tickets, setTickets] = useState([]);
-  console.log(authContext.user)
+  let accountId = authContext.accountId;
+
   useEffect(() => {
     api.get('/ticket/getTicketsOnSale/').then((response) => {
       if (response != null || response.data > 0 || response != undefined) {
@@ -20,6 +19,11 @@ export default function BuyTicketScreen() {
       }
     });
   }, [tickets]);
+  const addTicketToUser = () =>{
+    api.post(`/account//addTicket/${accountId}`).then((response) => {
+     
+    });
+  } 
 
   return (
     <Screen>
@@ -30,7 +34,7 @@ export default function BuyTicketScreen() {
         </View>
         {tickets.map((ticket, index) => {
             return (
-              <TicketOnSale key={index} destination={ticket.destination} arrivalTime={ticket.arrival_time_eta} departure={ticket.departure} departurTime={ticket.departure_time} busNumber={ticket.busNumber} status={ticket.status} price={ticket.price} />
+              <TicketOnSale onPress={addTicketToUser} key={index} destination={ticket.destination} arrivalTime={ticket.arrival_time_eta} departure={ticket.departure} departurTime={ticket.departure_time} busNumber={ticket.busNumber} status={ticket.status} price={ticket.price} />
             );
           })}
       </ScrollView>

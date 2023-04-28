@@ -26,11 +26,11 @@ public class Passenger {
     public Passenger(){ }
 
 
-    public Passenger(int passengerId, int accountId, String fname, String lname, Ticket ticket){
+    public Passenger(int passengerId, int accountId, String fName, String lName, Ticket ticket){
         this.passengerId = passengerId;
         this.accountId = accountId;
-        this.fName = fname;
-        this.lName = lname;
+        this.fName = fName;
+        this.lName = lName;
         this.ticket = ticket;
 
     }

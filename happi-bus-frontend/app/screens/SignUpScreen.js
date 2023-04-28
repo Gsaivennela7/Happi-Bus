@@ -4,19 +4,47 @@ import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import Screen from '../components/Screen';
 import { Formik } from 'formik';
 import * as yup from 'yup'
-
+import api from "../api/axiosSettings";
 import ImageInput from '../components/ImageInput';
 
 
 
 const MAX_FILE_SIZE = 102400; //100KB
 function SignUpScreen({ navigation }) {
-  const [image, setImage] = useState(null);
+  const fileData = new FormData();
+  fileData.append("file", {
+    uri: file,
+    type: "image/jpg", 
+  })
 
+  const [file, setFile] = useState(null);
   const handleSubmit = async (values) => {
-    let apiStr = endpoints.register
-    api.baseURL.post(apiStr, { firstName: values.first_name, lastName: values.last_name, email: values.email, password: values.password1, image }).then(response => {
+   
+  }
+
+/*
+  const handleSubmit = async (values) => {
+    let firstName = values.firstName;
+    let email = values.email;
+    let lastName = values.lastName;
+    let password = values.password;
+
+    const fileData = new FormData();
+    fileData.append("file", {
+      uri: encodeURIComponent(file),
+      type: "image.png"
+    })
+
+    api.post("/account/addAccount", {
+      params: {
+        firstName,
+        email,
+        lastName,
+        password
+      }
+    }).then(response => {
       console.log(response.data);
+      console.log("here");
       Alert.alert(
         "Sign up Succesfully",
         "You can now log in",
@@ -27,15 +55,15 @@ function SignUpScreen({ navigation }) {
     }
     );
   }
-  
+*/
 
   {/* To validate */ }
   const signUpValidationSchema = yup.object().shape({
-    first_name: yup
+    firstName: yup
       .string()
       .min(3, ({ min }) => `First name must be at least ${min} characters`)
       .required('First name is required'),
-    last_name: yup
+    lastName: yup
       .string()
       .min(3, ({ min }) => `Last name must be at least ${min} characters`)
       .required('Last name is required'),
@@ -43,17 +71,10 @@ function SignUpScreen({ navigation }) {
       .string()
       .email("Please enter valid email")
       .required('Email Address is Required'),
-    password1: yup
+    password: yup
       .string()
       .min(5, ({ min }) => `Password must be at least ${min} characters`)
       .required('Password is required'),
-    image: yup
-      .mixed()
-      .required("Required")
-      .test("is-valid-type", "Not a valid image type",
-        value => isValidFileType(value && value.name.toLowerCase(), "image"))
-      .test("is-valid-size", "Max allowed size is 100KB",
-        value => value && value.size <= MAX_FILE_SIZE)
   });
   return (
 
@@ -69,7 +90,7 @@ function SignUpScreen({ navigation }) {
           <View>
             {/* Form To Sign up*/}
             <Formik
-              initialValues={{ first_name: '', last_name: '', email: '', password1: '', password2: '', }}
+              initialValues={{ firstName: '', lastName: '', email: '', password: '', }}
               validationSchema={signUpValidationSchema}
               onSubmit={values => handleSubmit(values)}
             >
@@ -77,27 +98,27 @@ function SignUpScreen({ navigation }) {
                 <View>
                   <View style={styles.imageContainer}>
                     <Text style={styles.textInputImage}>Upload an image</Text>
-                    <ImageInput imageUri={image} onChangeImage={(uri) => setImage(uri)} />
+                    <ImageInput imageUri={file} onChangeImage={(uri) => setFile(uri)} />
                   </View>
                   {/* For First Name */}
                   <TextInput
                     style={styles.textInput}
                     placeholder='First name'
-                    onChangeText={handleChange('first_name')}
-                    onBlur={handleBlur('first_name')}
-                    value={values.first_name}
+                    onChangeText={handleChange('firstName')}
+                    onBlur={handleBlur('firstName')}
+                    value={values.firstName}
                   />
-                  {(errors.first_name && touched.first_name) && <Text style={styles.errorText}>{errors.first_name}</Text>}
+                  {(errors.firstName && touched.firstName) && <Text style={styles.errorText}>{errors.firstName}</Text>}
 
                   {/* For Last Name */}
                   <TextInput
                     style={styles.textInput}
                     placeholder='Last Name'
-                    onChangeText={handleChange('last_name')}
-                    onBlur={handleBlur('last_name')}
-                    value={values.last_name}
+                    onChangeText={handleChange('lastName')}
+                    onBlur={handleBlur('lastName')}
+                    value={values.lastName}
                   />
-                  {(errors.last_name && touched.last_name) && <Text style={styles.errorText}>{errors.last_name}</Text>}
+                  {(errors.lastName && touched.lastName) && <Text style={styles.errorText}>{errors.lastName}</Text>}
 
                   {/* For email */}
                   <TextInput
@@ -114,12 +135,12 @@ function SignUpScreen({ navigation }) {
                   <TextInput
                     style={styles.textInput}
                     placeholder='Password'
-                    onChangeText={handleChange('password1')}
-                    onBlur={handleBlur('password1')}
-                    value={values.password1}
+                    onChangeText={handleChange('password')}
+                    onBlur={handleBlur('password')}
+                    value={values.password}
                     secureTextEntry
                   />
-                  {(errors.password1 && touched.password1) && <Text style={styles.errorText}>{errors.password1}</Text>}
+                  {(errors.password && touched.password) && <Text style={styles.errorText}>{errors.password}</Text>}
                   <View style={styles.buttonContainer2}>
                     <Button onPress={handleSubmit} title="Sign up" color='#FFFFFF' />
                   </View>
@@ -134,13 +155,13 @@ function SignUpScreen({ navigation }) {
 }
 const styles = StyleSheet.create({
   imageContainer: {
-    flex: 1, 
-    borderWidth: 1, 
-    alignItems: 'center', 
-    marginLeft: 15, 
-    width: '35%', 
-    borderColor: "#A7A7A7", 
-    borderRadius: 10, 
+    flex: 1,
+    borderWidth: 1,
+    alignItems: 'center',
+    marginLeft: 15,
+    width: '35%',
+    borderColor: "#A7A7A7",
+    borderRadius: 10,
     justifyContent: 'center',
     overflow: 'hidden'
   },
@@ -222,7 +243,7 @@ const styles = StyleSheet.create({
     color: 'red',
   },
   textInputImage: {
- 
+
     fontSize: 20,
     color: '#A7A7A7',
   },

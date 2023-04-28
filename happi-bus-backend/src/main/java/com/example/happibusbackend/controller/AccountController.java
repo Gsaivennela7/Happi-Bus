@@ -57,17 +57,18 @@ public class AccountController {
     public ResponseEntity<List<Account>> getAllAccounts() {
         return new ResponseEntity<List<Account>>(accountRepository.findAll(), HttpStatus.OK);
     }
-    @PostMapping("/addAccount")
-    public ResponseEntity<?> addAccount(@RequestParam("file")MultipartFile file, @RequestParam String firstName, @RequestParam String email,
-                                        @RequestParam String lastName,@RequestParam String password,@RequestParam int Id
-                                        ) throws IOException, IOException{
+    @PostMapping("/uploadFile")
+	public String handleFileUpload(@RequestParam("file") MultipartFile file){
+
+        return "Successfully uploaded file";
+    }
+
+    @PostMapping("/addAccount") 
+    public ResponseEntity<?> addAccount(@RequestBody Account account) throws IOException, IOException{
 
         Account acc = new Account();
-        acc.setPassword(password);
-        acc.setFirstName(firstName);
-        acc.setLastName(lastName);
-        acc.setEmail(email);
-        return new ResponseEntity<>(accImpl.createAccount(acc,file), HttpStatus.OK);
+   
+        return new ResponseEntity<>(accImpl.createAccount(account), HttpStatus.OK);
 
     }
     private static String convertByteArrayToHexString(byte[] arrayBytes) {

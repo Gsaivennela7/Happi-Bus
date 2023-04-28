@@ -8,9 +8,10 @@ import AuthContext from '../auth/context';
 import * as yup from 'yup'
 
 function LoginScreen({ navigation }) {
+
+
     const authContext = useContext(AuthContext);
     const [user, setUser] = useState();
-
     const handleSubmit = async (values) => {
         api.post("/account/login/", { email: values.email, password: values.password }).then(response => {
             console.log(values.email);
@@ -18,13 +19,9 @@ function LoginScreen({ navigation }) {
                 console.log("Data: " + response.data);
                 setUser(response.data);
             }
-            
         })
     }
-
     useEffect(() => {
-        console.log("==========Context====================");
-
         if (user) {
             authContext.setUser(user);
             console.log(authContext.user);
@@ -45,13 +42,13 @@ function LoginScreen({ navigation }) {
             <View style={{ height: '100%', backgroundColor: '#E7ECF4' }}>
                 <View>
                     {/* Section reserved for Login + mini instruction */}
-                    <Text style={styles.introLabel}>Login</Text>
+                    <Text style={styles.introLabel}>Happy Bus Login</Text>
                     <Text style={styles.miniInstruction}>Enter your credentials to login</Text>
                 </View>
-
                 <View style={styles.loginBlock}>
                     <Formik
                         initialValues={{ email: '', password: '' }}
+                        validationSchema={loginValidationSchema}
                         onSubmit={values => handleSubmit(values)}
                     >
                         {({ handleChange, handleBlur, handleSubmit, values, errors, isValid, touched }) => (

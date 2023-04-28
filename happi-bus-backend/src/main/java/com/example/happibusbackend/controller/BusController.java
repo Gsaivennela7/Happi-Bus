@@ -59,4 +59,22 @@ public class BusController {
         ticketRepository.deleteAll();
         return "Tickets successfully deleted";
     }
+    /** 
+     * @return String
+     */
+    @GetMapping(value = "/populatePassenger/")
+    public String populatePassengers() {
+
+        Ticket ticket = new Ticket(1, "San Jose", "2023-04-29 1:30pm", "2023-04-29 7:30pm", "10A", "Active", 70);
+        Passenger passenger1 = new Passenger(100, 1, "Passenger", "One", ticket);
+        Passenger passenger2 = new Passenger(101, 2, "Passenger", "Two", ticket);
+        Passenger passenger3 = new Passenger(102, 3, "Passenger", "Three", ticket);
+        passengerRepository.save(passenger1);
+        passengerRepository.save(passenger2);
+        passengerRepository.save(passenger3);
+
+        return "Passengers successfully added";
+    }
+
+
 }

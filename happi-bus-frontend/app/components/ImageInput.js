@@ -13,7 +13,7 @@ function ImageInput({ onChangeImage, imageUri }) {
           quality: 1,
         });
         if (!result.canceled) {
-        onChangeImage(result.uri);
+        onChangeImage(result.assets[0].uri);
         }
       };
     return (
