@@ -1,0 +1,20 @@
+
+   h1{
+    background-color: black;
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+   }
+
+   img{
+    width:200px !important;
+    height: 200px !important;
+   }
+
+   form{
+    text-align: center;
+   }
+   body{
+      background-color: white !important;
+
+   }
