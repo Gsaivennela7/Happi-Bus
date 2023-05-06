@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.bson.types.ObjectId;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 @Document("Bus")
 @Data
@@ -17,11 +18,20 @@ public class Bus {
     private String driverName;
     private String dest;
     private String src;
-    private List<Passenger> passengers;
+    private List<Passenger> passengers = new ArrayList<Passenger>();
 
     public Bus(){
 
     }
+    public Bus(int busNumber, int capacity, String driverName, String dest, String src, List<Passenger> passengers){
+        this.busNumber = busNumber;
+        this.capacity = capacity;
+        this.driverName = driverName;
+        this.dest = dest;
+        this.src = src;
+        this.passengers = passengers;
+    }
+
 
     public String getDriverName() {
         return driverName;
@@ -64,14 +74,15 @@ public class Bus {
         this.capacity = capacity;
     }
 
-
-
     public int getBusNumber() {
         return busNumber;
     }
 
     public void setBusNumber(int busNumber) {
         this.busNumber = busNumber;
+    }
+    public void addNewPassenger(Passenger passenger){
+        passengers.add(passenger);
     }
 
     @Override

@@ -36,20 +36,20 @@ public class AccountService {
     public List<Account> allAccounts(){
         return accountRepository.findAll();
     }
-    public String createAccount(Account acc) throws IOException {
+    public String createAccount(Account acc, MultipartFile upload) throws IOException {
 
 
-       // String fieldId = uploadImage(upload, acc);
+        String fieldId = uploadImage(upload, acc);
     
         System.out.println(acc.getFirstName());
         System.out.println(acc.getLastName());
         System.out.println(acc.getEmail());
         System.out.println(acc.getPassword());
 
-        //System.out.println(upload);
+        System.out.println(upload);
 
-        //accountRepository.save(acc);
-        return "Test";
+       // accountRepository.save(acc);
+        return fieldId;
     }
 
     public String uploadImage(MultipartFile upload, Account acc) throws IOException{
@@ -57,7 +57,7 @@ public class AccountService {
 
         DBObject metadata = new BasicDBObject();
         metadata.put("photoSize", upload.getSize());
-        metadata.put("accountId", acc.getAcountId());
+        metadata.put("accountId", acc.getaccountId());
         Object fileId = gridtemplate.store(upload.getInputStream(),upload.getOriginalFilename(),upload.getContentType(),metadata);
                 return fileId.toString();
 

@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface AccountRepository extends MongoRepository<Account,ObjectId>{
-    List<Account> findByAcountId(int accountId);
+    List<Account> findByAccountId(int accountId);
     List<Account> findByEmail(String email);
 }
