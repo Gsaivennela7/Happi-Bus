@@ -4,7 +4,7 @@ import AddButton from './AddButton'
 
 export default function TicketOnSale({ destination, arrivalTime, departure, departurTime, busNumber, seatNumber, status, price, onPress  }) {
     return (
-        <TouchableOpacity onPress={onPress}>
+        <TouchableOpacity >
             <View style={styles.ticketContainer} >
                 <View style={{borderBottomWidth: 1, borderColor: "#DBDBDB", margin: 10,}}>
                     <Text style={styles.titleDefault}>{departure} to {destination}</Text>
@@ -26,8 +26,12 @@ export default function TicketOnSale({ destination, arrivalTime, departure, depa
                             <Text style={styles.labelFont}>Price: $</Text>
                             <Text style={styles.valueFont}>{price}</Text>
                         </View>
+                        <View style={{flexDirection: 'row'}}>
+                            <Text style={styles.labelFont}>Bus #</Text>
+                            <Text style={styles.valueFont}>{busNumber}</Text>
+                        </View>
                     </View>
-                    <AddButton />
+                    <AddButton onPress={onPress}/>
                 </View>
              
           
@@ -44,12 +48,12 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     labelFont: {
-        fontSize: 18,
+        fontSize: 24,
         color: '#000000',
         fontWeight: 'bold'
     },
     valueFont: {
-        fontSize: 16,
+        fontSize: 24,
         color: '#000000',
     },
     titleContainer: {
