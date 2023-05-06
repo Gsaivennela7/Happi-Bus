@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.happibusbackend.model.Bus;
 import com.example.happibusbackend.model.Passenger;
 import com.example.happibusbackend.model.Ticket;
 import com.example.happibusbackend.repository.BusRepository;
@@ -32,13 +33,20 @@ public class BusController {
 
     @GetMapping(value = "/addTicketsOnSale/")
     public String addTicketsOnSale() {
-        ticketRepository.save(
-                new Ticket("Temecula", "2023-04-29 1:30pm", "San Jose", "2023-04-29 7:30pm", "10D", "On Sale", 70));
-        ticketRepository.save(
-                new Ticket("San Diego", "2023-04-29 1:30pm", "San Jose", "2023-04-29 7:30pm", "10D", "On Sale", 70));
-        ticketRepository.save(
-                new Ticket("Los Angeles", "2023-04-29 1:30pm", "San Jose", "2023-04-29 7:30pm", "10D", "On Sale", 70));
+        ticketRepository.save(new Ticket("Temecula", "2023-04-29 1:30pm", "San Jose", "2023-04-29 7:30pm", "1", "On Sale", 80));
+        ticketRepository.save(new Ticket("San Diego", "2023-04-29 1:30pm", "San Jose", "2023-04-29 7:30pm", "2", "On Sale", 80));
+        ticketRepository.save(new Ticket("Los Angeles", "2023-04-29 1:30pm", "San Jose", "2023-04-29 7:30pm", "3", "On Sale", 80));
         return "Tickets successfully added";
+    }
+    @GetMapping(value = "/addBusOnTerminal/")
+    public String addBusOnTerminal() {
+        
+        List<Passenger> busTwoPassengers = new ArrayList<Passenger>(10);
+        List<Passenger> busThreePassengers = new ArrayList<Passenger>(10);
+        busRepository.save(new Bus(1, 10, "John Doe", "Temecula", "San Jose", busTwoPassengers));
+        busRepository.save(new Bus(2, 10, "John Doe", "San Diego", "San Jose", busTwoPassengers));
+        busRepository.save(new Bus(3, 10, "John Doe", "Los Angeles", "San Jose", busThreePassengers));
+        return "Busses successfully added";
     }
 
     @GetMapping("/getAllPassengers/{busNnumber}")
@@ -59,19 +67,16 @@ public class BusController {
         ticketRepository.deleteAll();
         return "Tickets successfully deleted";
     }
+    @GetMapping("/deleteAllPassenger/")
+    public String deleteAllPassenger() {
+        passengerRepository.deleteAll();
+        return "Passengers successfully deleted";
+    }
     /** 
      * @return String
      */
     @GetMapping(value = "/populatePassenger/")
     public String populatePassengers() {
-
-        Ticket ticket = new Ticket(1, "San Jose", "2023-04-29 1:30pm", "2023-04-29 7:30pm", "10A", "Active", 70);
-        Passenger passenger1 = new Passenger(100, 1, "Passenger", "One", ticket);
-        Passenger passenger2 = new Passenger(101, 2, "Passenger", "Two", ticket);
-        Passenger passenger3 = new Passenger(102, 3, "Passenger", "Three", ticket);
-        passengerRepository.save(passenger1);
-        passengerRepository.save(passenger2);
-        passengerRepository.save(passenger3);
 
         return "Passengers successfully added";
     }
