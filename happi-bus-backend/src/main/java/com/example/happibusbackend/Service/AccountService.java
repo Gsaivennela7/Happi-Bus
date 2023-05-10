@@ -40,15 +40,7 @@ public class AccountService {
 
 
         String fieldId = uploadImage(upload, acc);
-    
-        System.out.println(acc.getFirstName());
-        System.out.println(acc.getLastName());
-        System.out.println(acc.getEmail());
-        System.out.println(acc.getPassword());
-
-        System.out.println(upload);
-
-       // accountRepository.save(acc);
+        accountRepository.save(acc);
         return fieldId;
     }
 
@@ -58,7 +50,7 @@ public class AccountService {
         DBObject metadata = new BasicDBObject();
         metadata.put("photoSize", upload.getSize());
         metadata.put("accountId", acc.getaccountId());
-        Object fileId = gridtemplate.store(upload.getInputStream(),upload.getOriginalFilename(),upload.getContentType(),metadata);
+        Object fileId = gridtemplate.store(upload.getInputStream(),String.valueOf(acc.getaccountId()),upload.getContentType(),metadata);
                 return fileId.toString();
 
     }
