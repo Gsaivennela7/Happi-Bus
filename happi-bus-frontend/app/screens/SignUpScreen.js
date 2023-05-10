@@ -64,8 +64,7 @@ function SignUpScreen({ navigation }) {
     <ScrollView>
       <Screen>
         <UploadScreen progress={uploadProgress} visible={uploadVisible} />
-        <Image style={{ alignSelf: 'center', height: '20%', width: '70%' }} source={require('../assets/images/HappyBus.png')} />
-        <View style={{ backgroundColor: '#FFFFFF' }}>
+        <View style={{ backgroundColor: '#FFFFFF', }}>
           <View>
             {/* Section reserved for Sign up + mini instruction */}
             <Text style={styles.introLabel}>Sign Up</Text>
@@ -126,7 +125,7 @@ function SignUpScreen({ navigation }) {
                   />
                   {(errors.password && touched.password) && <Text style={styles.errorText}>{errors.password}</Text>}
                   <View style={styles.buttonContainer2}>
-                    <Button onPress={handleSubmit} title="Sign up" color='#FFFFFF' />
+                    <Button onPress={handleSubmit} title="Sign up" color='#85AAE6' />
                   </View>
                 </View>
               )}
@@ -138,6 +137,16 @@ function SignUpScreen({ navigation }) {
   );
 }
 const styles = StyleSheet.create({
+  buttonContainer2: {
+    marginTop: 20,
+    borderRadius: 30,
+    margin: 5,
+    height: 50,
+    borderWidth: 1,
+    borderColor: '#A7A7A7',
+    alignItems: 'center',
+    justifyContent: 'center'
+},
   imageContainer: {
     flex: 1,
     borderWidth: 1,
@@ -154,12 +163,12 @@ const styles = StyleSheet.create({
     textAlign: "left",
     marginBottom: 10,
     marginLeft: 25,
-    fontSize: 55,
+    fontSize: 12,
     color: '#85AAE6'
   },
   titleLabel: {
     textAlign: "center",
-    fontSize: 45,
+    fontSize: 12,
     color: '#85AAE6'
   },
   miniInstruction: {

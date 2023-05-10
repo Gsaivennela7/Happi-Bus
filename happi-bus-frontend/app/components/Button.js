@@ -9,10 +9,10 @@ function Button({onPress, title, color}) {
 }
 const styles = StyleSheet.create({
     buttonContainer: {
-        marginTop: 30,
+        marginTop: 20,
         borderRadius: 30,
         margin: 5,
-        height: 40,
+        height: 50,
         borderWidth: 1,
         borderColor: '#A7A7A7',
         alignItems: 'center',
