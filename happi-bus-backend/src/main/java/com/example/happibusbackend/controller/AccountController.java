@@ -1,8 +1,7 @@
 package com.example.happibusbackend.controller;
 
 import com.example.happibusbackend.Service.AccountService;
-import com.example.happibusbackend.model.Account;
-import com.example.happibusbackend.model.Bus;
+import com.example.happibusbackend.model.*;
 import com.example.happibusbackend.repository.AccountRepository;
 import com.example.happibusbackend.repository.BusRepository;
 import com.example.happibusbackend.repository.PassengerRepository;
@@ -11,7 +10,13 @@ import com.mongodb.client.MongoClients;
 
 import jakarta.servlet.http.HttpSession;
 
+import nu.pattern.OpenCV;
 import org.bson.types.ObjectId;
+import org.opencv.core.Core;
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfRect;
+import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.objdetect.CascadeClassifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -25,20 +30,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.attribute.PosixFilePermission;
+import java.nio.file.attribute.PosixFilePermissions;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.crypto.spec.PBEKeySpec;
-
-import com.example.happibusbackend.model.Passenger;
-import com.example.happibusbackend.model.Ticket;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -84,21 +94,56 @@ public class AccountController {
             @RequestParam String email,
             @RequestParam String lastName, @RequestParam String password) throws IOException, IOException {
 
-        Account acc = new Account();
+        //load all native libraries
+        OpenCV.loadShared();
 
-        acc.setPassword(password);
-        acc.setFirstName(firstName);
-        acc.setLastName(lastName);
-        acc.setEmail(email);
-        acc.setAccountId(ID_GENERATOR.getAndIncrement());
 
-        System.out.println(password);
-        System.out.println(firstName);
-        System.out.println(lastName);
-        System.out.println(email);
-        System.out.println(file);
+        // Convert the MultipartFile to a BufferedImage
+        BufferedImage bufferedImage = ImageIO.read(file.getInputStream());
 
-        return new ResponseEntity<>(accImpl.createAccount(acc, file), HttpStatus.OK);
+        File imageFile = File.createTempFile("converted", ".png");
+        // Write the BufferedImage to the temporary file
+        ImageIO.write(bufferedImage, "png", imageFile);
+
+        // Load the photo as a grayscale image , give the absolute path for running
+        Mat image = Imgcodecs.imread(imageFile.getPath(),Imgcodecs.IMREAD_GRAYSCALE);
+
+
+        // Load the pre-trained face detection classifier
+        CascadeClassifier faceDetector = new CascadeClassifier("/Users/saivennelagarikapati/Downloads/Happi-Bus/happi-bus-backend/src/main/resources/haarcascade_frontalface_default.xml");
+
+        // Detect faces in the image
+        MatOfRect faceDetections = new MatOfRect();
+        faceDetector.detectMultiScale(image, faceDetections);
+
+        // Check the number of detected faces
+        int numFaces = faceDetections.toArray().length;
+        System.out.println("NUmber of faces"+numFaces);
+        if (numFaces > 1 || numFaces < 1) {
+            System.out.println("The uploaded photo has more than one face or no face.");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            System.out.println("The uploaded photo has one face.");
+            Account acc = new Account();
+
+            acc.setPassword(password);
+            acc.setFirstName(firstName);
+            acc.setLastName(lastName);
+            acc.setEmail(email);
+            acc.setAccountId(ID_GENERATOR.getAndIncrement());
+
+
+            Photo p = new Photo();
+            p.setPhoto(file.getBytes());
+            p.setPhotoSize(file.getContentType());
+            p.setPhotoType(file.getOriginalFilename());
+            p.setPhotoName(file.getName());
+            acc.setPhoto(p);
+
+
+            return new ResponseEntity<>(accImpl.createAccount(acc, file), HttpStatus.OK);
+
+        }
 
     }
 
