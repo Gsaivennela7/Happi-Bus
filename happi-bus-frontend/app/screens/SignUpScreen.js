@@ -35,6 +35,11 @@ function SignUpScreen({ navigation }) {
         [{ text: 'OK', onPress: () => console.log('OK Pressed') }]
       );
     } catch (error) {
+      Alert.alert(
+        'Failed to Process Photo',
+        'Please upload another Photo',
+        [{ text: 'OK', onPress: () => console.log('OK Pressed') }]
+      );
       console.log(error);
     }
     setUploadVisible(false);
