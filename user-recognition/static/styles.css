@@ -1,20 +1,102 @@
-
-   h1{
+body{
+   width: 100%
+}
+ h1{
     background-color: black;
     color: white;
     font-family: 'Courier New', Courier, monospace;
     text-align: center;
    }
-
-   img{
-    width:200px !important;
-    height: 200px !important;
-   }
-
    form{
     text-align: center;
    }
-   body{
-      background-color: white !important;
 
-   }
+/* bus section */
+#bus{
+   text-align: center;
+   background-color: lightgray;
+   color:whitesmoke;
+   height: 400px;
+}
+.busImage{
+   height:400px;
+}
+.carousel img {
+   max-width: 100%;
+   max-height: 100%;
+ }
+button{
+   margin: 10px 10px;
+ }
+ .modal-dialog{
+   height: 100%;
+ }
+ .modal-body{
+   padding-top: 80%;
+ }
+ .modal-content{
+   background-color: transparent;
+   border: none;
+   height: 100%;
+ }
+ #pricing{
+   padding:10px;
+   text-align:center;
+   background-color: #FF4C68;
+}
+.card{
+   width:80%;
+   margin: 0 auto;
+}
+
+.pricingDescription{
+text-align: center;
+padding: 30px;
+}
+.links{
+   padding:10px;
+}
+#slideShowText{
+   padding:100px;
+   text-align:center;
+   background-color: #FF4C68;
+   font-size: x-large;
+   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+   height:400px;
+}
+#logo1{
+   height:60%;
+   width:35%;
+   float: left;
+
+}
+#homePageTitle{
+   text-align:right;
+   background-color: black !important;
+   height: 50px;
+}
+a{
+   font-size:  small;
+   color:white;
+   padding: 10px;
+   text-align: right;
+}
+.container-fluid{
+   margin-top: 0.1px !important;
+   padding: 0px !important;
+}
+.emoji {
+   font-family: 'Noto Emoji', sans-serif;
+   font-weight: 300;
+ }
+ #verify
+ {
+   text-align: center;
+   height: 300px;
+   margin-top: 10%;
+ }
+ #popper
+ {
+   size: 400px;
+   
+ }

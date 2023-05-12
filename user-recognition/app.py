@@ -1,77 +1,85 @@
-from flask import Flask,request,render_template,Response,redirect,url_for
+from flask import Flask,request,render_template,Response,redirect,url_for,jsonify
 from main import *
 import cv2
 import cvzone
 import face_recognition as fr
+import os
+import tempfile
+import base64
+import PIL.Image as Image 
+import io
 
 app = Flask(__name__)
 
+global db 
+global namesList
+counter =0
+namesList =[]
+global validFaceCheck
 
 
-@app.route("/verification")
-def getStatus():
+# redirecting to the home page for verification
+@app.route('/verification')
+def verification():
     return render_template('home.html')
 
+#Get all passenger details when the admin clicks submit
 @app.route("/submit")
 def setSubmit():
-    busNumber = request.form.get("busNumber")
-    db = process(busNumber)
-    return video_feed(db)
+    global db
+    busNumber = request.args.get("busNumber")
+    db,valid = process(busNumber)
+    if(valid == False):
+        return render_template('success.html') 
+    else:
+        return render_template('display.html', busNumber=busNumber)
+    
+ 
+# check for validity of the image captured
+@app.route('/frame_check', methods=['POST'])
+def frame_check():
+    global db 
+    
+    # Get the frame data from the request
+    frameData = request.form['frame']
+    
+    # Decode the base64-encoded frame data into a byte string
+    frameBytes = base64.b64decode(frameData.split(',')[1])
 
-@app.route("/success")
-def success():
-    name = request.args.get('name')
-    return render_template('success.html',value=name)
-
-
-def video_feed(db):
-    return Response(generate_frames(db), mimetype='multipart/x-mixed-replace;boundary=frame')
-
-def generate_frames(db):
-
+    # Convert the byte string into an OpenCV image
+    nparr = np.frombuffer(frameBytes, np.uint8)
+    image = cv2.imdecode(nparr,flags=1)
+    
+    # Process the image
     encodeListKnowndb,passengerIds = getDetails()
-    cap = cv2.VideoCapture(0)
-    #webcam 
-    cap = cv2.VideoCapture(0)
-    #cap.set(3,640)
-    #cap.set(4,480)
-    #set the background for the screen
-    imgbackground = cv2.imread('./Resources/background.jpeg')
-    tmp = 0
-    quit_flag= False
-    while not quit_flag:
-        success, img = cap.read()
-        if not success:
-            break
-        else:          
-            img,fname = compare(db,img,encodeListKnowndb,passengerIds)
-            print(fname)
-            ret, buffer = cv2.imencode('.jpg', img)
-            frame = buffer.tobytes()
-            if len(fname) == 0:
-                tmp += 1
-                if tmp == 10:
-                     #redirect(url_for('success', fname=fname))
-                     pass
+  
+    #
+    img,fname,faceValidated,faceDetect = compare(db,image,encodeListKnowndb,passengerIds)
+    # faceDetect is false if no face is detected. ==> faceDetect is true if face is detected.
+    print("detect", faceDetect)
+    print("validate", faceValidated)
 
-            yield (b'--frame\r\n'
-                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
-        
-            # if(""==name):
-            #     return render_template('failure.html')
-        
-             
+    print("fname",fname)
+    global namesList 
+    if fname not in namesList:
+        if len(fname)!=0:
+            namesList.append(fname)
 
-        #for 5 seconds and read the key input for esc  
-        b = cv2.waitKey(5) & 0xff
-       
-        # when the esc is pressed, terminate the loop
-        if b == 27:
-             print("key value")
-             quit_flag=True
-        
-    cap.release()
-    cv2.destroyAllWindows()
+    # validFaceCheck = faceDetect
+    # # Return the processed image as a JSON response
+    # We no longer require to return processed image.
+    # return jsonify({'processedFrame': processedFrameData,
+    #                 'validFaceCheck':faceDetect })
+    return jsonify({
+        'FaceDetected': faceDetect,
+        'names': namesList,
+        'FaceValidated': faceValidated,
+        'ValidatedFaceName': fname
+    })
+
+
+
+# Start the application
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)

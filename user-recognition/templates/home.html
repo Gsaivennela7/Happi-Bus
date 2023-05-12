@@ -1,18 +1,178 @@
 <!DOCTYPE html>
 <head>
-    <link rel="stylesheet" type="text/css" href="/static/styles.css"/>
     <title>
         BUS TERMINAL
     </title>
-    
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport">
+  <!-- Bootstarp scripts-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script> 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css" integrity="sha384-QYIZto+st3yW+o8+5OHfT6S482Zsvz2WfOzpFSXMF9zqeLcFV0/wlZpMtyFcZALm" crossorigin="anonymous">
+  <script src="static/script_home.js"></script>
+  <!-- css stylesheets-->
+  <link  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <link rel="stylesheet" href="static/styles.css">
+
+  <!-- google fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <h1>Happy Bus Management System </h1>  
-    <form action='/submit'>
-    <input type="text" name="busNumber"/><br>
-    <input type="Submit"/>
-    </form>
-    <img src="static/day_bus.png"/>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+           <div class="modal-body" style="text-align: center;">
+            <div class="spinner-border m-12" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              
+        </div>    
+      </div>
+    </div>
+  </div>
+  <div id="homePageTitle" class="row">
+    <div class="col-md-3">
+      <img id="logo1" src="static/busEdited.png"/>
+  </div>
+  <div class="col-md-6">
+    <h1>Happy Bus Management System </h1>
+  </div>
+  <div class="col-md-3 links">
+    <a href="#verify"> Verify</a>
+    <a href="#pricing"> Pricing</a>
+    <a href="#footer"> About</a> 
+  </div>
+  </div>
+    <section>
+    <div class="container-fluid slideShow"> 
+     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="static/bus5.jpeg" class="busImage d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <div id="slideShowText">
+            <p> <span class="emoji" role="img" aria-label="party-popper">🎉</span> We ensure happy and secure travel across the country</p>
+            <p>    Get Best Deals through out the year <span id="popper">🥳 </span></p>
+          </div>
+          </div>
+          <div class="carousel-item">
+            <img src="static/bus2.jpg" class="busImage d-block w-100" alt="...">
+          </div>
+          
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+</section> 
+    <div id="verify" >
+       <form onSubmit="showLoader()" action="/submit">
+          <p> Enter the BusNumber to retrieve the passengers</p>
+                        <input id= "busNumber" type="text" name="busNumber"/><br>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="show()"> submit </button>
+            </form>
+          </div>
+            <section id="pricing">
+
+                <div class="pricingDescription">
+                  <h2>A Plan for Every Travel</h2>
+                  <p>Simple and affordable price plans for you and your family.</p>
+                </div>
+            
+            
+            <div class="card-deck">
+            
+              <div class="row">
+            
+              <div  class="col-lg-4 col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                      <h3>Basic</h3>
+                    </div>
+            
+                    <div class="card-body chin">
+                      <h2>Free</h2>
+                      <p>Water</p>
+                      <p>Travel Kit</p>
+                      <p>Internet 1GB</p>
+                    </div>
+            
+                    <div class="card-footer">
+                      <button class="btn btn-lg btn-block btn-outline-dark" type="button">Grab It</button>
+                    </div>
+                </div>
+              </div>
+            
+              <div  class="col-lg-4 col-md-6">
+                <div class="card">
+                  <div class="card-header ">
+                    <h3>Premium</h3>
+                  </div>
+            
+                  <div class="card-body lab">
+                    <h2>$49 / mo</h2>
+                    <p>Priority Booking</p>
+                    <p>Free Prime</p>
+                     <p>Internet 5GB</p>
+                    <p> </p>
+                  </div>
+            
+                  <div class="card-footer">
+                    <button class="btn btn-lg btn-block btn-outline-dark"  type="button">Grab It</button>
+                  </div>
+                </div>
+              </div>
+            
+              <div  class="col-lg-4 col-md-6">
+                  <div class="card">
+                    <div class="card-header">
+                      <h3>Extra Premium</h3>
+                    </div>
+              
+                    <div class="card-body">
+                        <h2>$99 / mo</h2>
+                        <p>Pirority Pass</p>
+                        <p>Free Netflix</p>
+                        <p>Unlimited Inernet</p>
+                    </div>
+              
+                    <div class="card-footer">   
+                      <button class="btn btn-lg btn-block btn-outline-dark"  type="button"> Grab It </button>
+                    </div>
+                  </div>
+                </div>
+                 </div>
+            
+                </div>
+                
+              </section>
+            
+
+            <!-- Footer -->
+            <footer id="footer">
+                <p style="text-align:center">© Copyright Hapi-Bus 2023</p>
+            </footer>
+    
 </body>
 </html>

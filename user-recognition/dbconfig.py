@@ -31,10 +31,20 @@ def connectDb():
     
     return db
  
+def checkBusNumber(db,busNumber):
+    collectionBus = db.Bus
+    busNumber = int(busNumber)
+    result = collectionBus.find_one({"busNumber":busNumber})
+    if result is not None:
+        return True
+    else:
+        return False
+
 #get all the passenger details travelling in the bus
 def find_all_passengers(db,busNumber):
     collectionAccount = db.account
     collectionBus = db.Bus
+    busNumber = int(busNumber)
     passenger_dict = collectionBus.find({"busNumber":busNumber},{"passengers":1 })
     for passenger in passenger_dict:
         passengers.append(passenger["passengers"])
@@ -42,42 +52,43 @@ def find_all_passengers(db,busNumber):
     passeng = np.array(passengers).flatten()
     
     for p in passeng:
-        accountIds.append(p['accountId'])
-        passengerIds.append(p['passengerId'])
-    print("pass",passengerIds)
-    
+        accountId = str(p['accountId'])
+        if  accountId not in accountIds:
+            accountIds.append(accountId)
+        if p['passengerId'] not in passengerIds:
+            passengerIds.append(p['passengerId'])
+    print(passengerIds,accountIds,"ghgjg")
 
 #get all the passenger photos, travelling in the bus
 def find_photos(db):
     #create GirdFS
     fs = GridFS(db)
-    image_documents = fs.find({'filename': {"$in": accountIds}})
-
+    image_documents = fs.find({'filename': {"$in": accountIds }})
+    
     for image_document in image_documents:
+        
         image_document_binary = image_document.read()
         imagesList.append(image_document_binary);
+    
 
 def findEncodings():
+    global imagesList
+    
     enCodeList =[]
     for img in imagesList:
-        #convert bgr to rgb as face-recognition uses it.
-        print(type(img))
-        
-        #byte_image = bytes(img)
-
-        #b = base64.b64decode(img)
-        img = Image.open(io.BytesIO(img))
-        #img.show()
-        img = np.array(img)
-        img =cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
-        # Use cv2.imdecode() to decode the byte buffer into a NumPy array
-        # Set the 'cv2.IMREAD_COLOR' flag to decode the image as a 3-channel color image (RGB)
-        # Set the '1' flag to load the image as is (without any color correction)
-        #img = cv2.imdecode(np.frombuffer(byte_image, dtype=np.uint8), cv2.IMREAD_COLOR | 1)
-
        
+        img = Image.open(io.BytesIO(img))
+
+        #convert into array as the cvtColor method accepts only numpy array
+        img = np.array(img)
+
+        #convert bgr to rgb as face-recognition uses it.
+        img =cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
+        
+        #find the face encodings, compute from elements at 0 index   
         encode = fr.face_encodings(img)[0]
         enCodeList.append(encode)
+        
 
     return enCodeList
 
@@ -85,19 +96,23 @@ def dumpPickle(enCodeList):
     encodeListknowndb = enCodeList
     encodeListknowndb = encodeListknowndb
     encodeListwithIdsdb = [encodeListknowndb,passengerIds]
-    print(encodeListknowndb)
-
     file = open("EncodeFile.p", "wb")
     pickle.dump(encodeListwithIdsdb, file)
     file.close()
 
 def processEncodings(busNumber):
    db = connectDb()
-   find_all_passengers(db,busNumber)
-   find_photos(db)
-   enCodeList = findEncodings()
-   dumpPickle(enCodeList)
-   return db
+   valid = checkBusNumber(db,busNumber)
+   if(valid):
+     find_all_passengers(db,busNumber)
+     find_photos(db)
+     enCodeList = findEncodings()
+     dumpPickle(enCodeList)
+     return db,True
+   else:
+    return db,False
+
+  
 
 
 
