@@ -6,27 +6,25 @@ import com.example.happibusbackend.repository.AccountRepository;
 import com.example.happibusbackend.repository.BusRepository;
 import com.example.happibusbackend.repository.PassengerRepository;
 import com.example.happibusbackend.repository.TicketRepository;
-import com.mongodb.client.MongoClients;
 
 import jakarta.servlet.http.HttpSession;
 
 import nu.pattern.OpenCV;
 import org.bson.types.ObjectId;
-import org.opencv.core.Core;
+import org.opencv.core.*;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfRect;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.objdetect.CascadeClassifier;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,20 +32,15 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.attribute.PosixFilePermission;
-import java.nio.file.attribute.PosixFilePermissions;
+import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import javax.crypto.spec.PBEKeySpec;
 import javax.imageio.ImageIO;
 
 /**
@@ -83,17 +76,12 @@ public class AccountController {
         return new ResponseEntity<List<Account>>(accountRepository.findAll(), HttpStatus.OK);
     }
 
-    @PostMapping("/uploadFile")
-    public String handleFileUpload(@RequestParam("file") MultipartFile file) {
-
-        return "Successfully uploaded file";
-    }
-
     @PostMapping("/addAccount")
     public ResponseEntity<?> addAccount(@RequestParam("file") MultipartFile file, @RequestParam String firstName,
             @RequestParam String email,
             @RequestParam String lastName, @RequestParam String password) throws IOException, IOException {
 
+        String absolutePath="";
         //load all native libraries
         OpenCV.loadShared();
 
@@ -108,13 +96,24 @@ public class AccountController {
         // Load the photo as a grayscale image , give the absolute path for running
         Mat image = Imgcodecs.imread(imageFile.getPath(),Imgcodecs.IMREAD_GRAYSCALE);
 
+        // Get the resource URL
+        URL resourceUrl = AccountController.class.getResource("/haarcascade_frontalface_default.xml");
 
-        // Load the pre-trained face detection classifier
-        CascadeClassifier faceDetector = new CascadeClassifier("/Users/saivennelagarikapati/Downloads/Happi-Bus/happi-bus-backend/src/main/resources/haarcascade_frontalface_default.xml");
+        if (resourceUrl != null) {
+            // Convert the URL to a file path
+            File resourceFile = new File(resourceUrl.getFile());
+
+            // Get the absolute file path
+             absolutePath = resourceFile.getAbsolutePath();
+        }
+            // Load the pre-trained face detection classifier
+        CascadeClassifier faceDetector = new CascadeClassifier(absolutePath);
 
         // Detect faces in the image
         MatOfRect faceDetections = new MatOfRect();
-        faceDetector.detectMultiScale(image, faceDetections);
+        Size minSize = new Size(30, 30);
+        Size maxSize = new Size(200, 200);
+        faceDetector.detectMultiScale(image, faceDetections,1.1,4,0,minSize,maxSize);
 
         // Check the number of detected faces
         int numFaces = faceDetections.toArray().length;
@@ -265,6 +264,7 @@ public class AccountController {
         
  
     }
+
     @PostMapping(value = "/addTicket/{accountId}")
     public Passenger checkout(@RequestBody Ticket ticket, @PathVariable String accountId, HttpSession session)
             throws Exception {

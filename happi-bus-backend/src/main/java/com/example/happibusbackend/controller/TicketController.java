@@ -21,15 +21,19 @@ public class TicketController {
     @Autowired
     private TicketRepository ticketRepository;
 
+    //get all the tickets on sale
     @GetMapping("/getTicketsOnSale/")
     public List<Ticket> getAllActivity() {
+        //find all the tickets in the repository
         List<Ticket> tickets = ticketRepository.findAll();
         List<Ticket> ticketsOnSale = new ArrayList<>();
         for (Ticket ticket : tickets) {
+            //checks if the tickets are on sale
             if (ticket.getStatus().equals("On Sale")){
                 ticketsOnSale.add(ticket);
             }
         };
+        //provide the tickets without sale if there is no sale
         return (ticketsOnSale.size() <= 0) ? tickets : ticketsOnSale;
     }
 }
