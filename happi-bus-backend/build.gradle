@@ -23,6 +23,7 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.openpnp:opencv:4.7.0-0'
 	compileOnly 'org.springframework.boot:spring-boot-starter-security'
 	compileOnly  'commons-io:commons-io:2.11.0'
 	compileOnly 'org.projectlombok:lombok'

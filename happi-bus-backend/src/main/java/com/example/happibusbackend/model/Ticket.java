@@ -24,14 +24,13 @@ public class Ticket {
     private String busNumber;
     private String status;
     private int price;
+    
 
-
+    private static AtomicInteger ID_GENERATOR = new AtomicInteger(1000);
     public Ticket() {
 
     }
-    //Tickets on Sale
-    public Ticket(String destination, String arrival_time_eta,
-            String departure, String departure_time, String busNumber, String status, int price) {
+    public Ticket(String destination, String arrival_time_eta, String departure, String departure_time, String busNumber, String status, int price) {
         this.destination = destination;
         this.arrival_time_eta = arrival_time_eta;
         this.departure_time = departure_time;
@@ -39,20 +38,8 @@ public class Ticket {
         this.busNumber = busNumber;
         this.status = status;
         this.price = price;
+        this.ticketId = ID_GENERATOR.getAndIncrement();
     }
-
-    //Tickets Bought by a Passenger
-    public Ticket(int ticketId, String destination, String arrival_time_eta,
-            String departure_time, String busNumber, String status, int price) {
-        this.ticketId = ticketId;
-        this.destination = destination;
-        this.arrival_time_eta = arrival_time_eta;
-        this.departure_time = departure_time;
-        this.busNumber = busNumber;
-        this.status = status;
-        this.price = price;
-    }
-
     public int getTicketId() {
         return ticketId;
     }
