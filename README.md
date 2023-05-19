@@ -1,2 +1,6 @@
 # Happi-Bus
 Bus ticket management mobile application 
+##INTRODUCTION
+As a human, we get a chance to travel through the world through different modes of transportation.Whenever we travel, we have to book a seat on a bus or train. So, when we  purchase a ticket be it for a bus or train, a ticket with a QR code will be generated. Further, we have to scan the QR code for verification to claim the ticket. As there is no watermark on the token for verification, there is no guarantee an authorized passenger is boarding the bus.
+In this scenario, there is a chance of malpractice, as an unauthorized user might steal the ticket and occupy the booked seat. To ensure authenticity and security, and to overcome these problems,we propose a plan to utilize the user face as a ticket verification technique. So that only authorized users can be allowed with reliability. 
+We are mainly focusing on security and achieving it through facial authorization. To achieve this, our project focuses on creating a model where a user does not need to worry about security and malpractice with the booked tickets. This consists of two systems, the first one where the user gets to purchase the tickets using the application, and the second verification system. Overall, our System aims in enhancing the customer experience by providing efficient bus operations, improving the ticketing system.
